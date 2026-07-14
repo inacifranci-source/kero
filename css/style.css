@@ -1,0 +1,1933 @@
+:root {
+    --primary-color: #00c800;
+    --primary-dark: #00a000;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --card-bg: rgba(255, 255, 255, 0.98);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Header --- */
+.header {
+    width: 100%;
+    padding: 0.8rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-light);
+    background-color: rgba(0, 0, 0, 0.15);
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    position: relative;
+    z-index: 10;
+    transform: translateY(-2px);
+    filter: brightness(0) invert(1); /* Logo branca pura — 100% visível sobre qualquer fundo */
+    opacity: 1;
+}
+
+.header-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.4rem 1rem;
+    background: transparent;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+.header-badge .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff6b00;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* --- Container --- */
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 1.5rem 1rem 3rem; /* Mais espaço na base */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* --- Cards --- */
+.card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.validation-card {
+    padding: 0.8rem 1rem !important; /* Mais compacto */
+    gap: 0.4rem !important;
+}
+
+/* --- Barra de Progresso --- */
+.progress-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+}
+
+.progress-text {
+    color: #1b4b73; /* Azul escuro da imagem */
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.progress-percent {
+    color: #ff6b00; /* Laranja da imagem */
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background-color: #e2e8f0; /* Cinza clarinho do fundo */
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #ff6b00; /* Preenchimento laranja */
+    border-radius: 4px;
+    transition: width 0.4s ease-out;
+}
+
+.validation-card h2 {
+    color: var(--text-dark);
+    font-size: 0.8rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.earnings-box {
+    background-color: #f5f5f5;
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+}
+
+.earnings-box .label {
+    font-size: 0.65rem;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.earnings-box .amount {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+/* --- Overlay de Revelação da Fatura --- */
+.invoice-card {
+    position: relative;
+    overflow: visible; /* Permite que a sombra e animação sejam vistas sem corte */
+    animation: float-card 3s ease-in-out infinite;
+    margin-top: 10px; /* Espaço extra para não sobrepor o card acima */
+    margin-bottom: 10px; /* Espaço extra na base */
+}
+
+@keyframes float-card {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Fatura fica invisível (totalmente coberta) enquanto overlay está ativo */
+.invoice-card.blurred .receipt {
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+.reveal-overlay {
+    position: absolute;
+    inset: 0;
+    background: #22322d; /* Cor escura solicitada (acinzentada/esverdeada escura) */
+    border-radius: 12px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Animação de saída do overlay */
+.reveal-overlay.hiding {
+    opacity: 0;
+    transform: scale(1.06);
+    pointer-events: none;
+}
+
+.reveal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+    width: 100%;
+}
+
+.reveal-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    position: relative;
+}
+
+/* Contador de 3 segundos com anel animado — lado direito */
+.countdown-badge {
+    position: absolute;
+    right: 0;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.countdown-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* Começa do topo */
+}
+
+.countdown-circle-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-width: 8;
+}
+
+.countdown-circle-progress {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 8;
+    stroke-linecap: round;
+    /* 2 * pi * r (onde r=45) = aprox 283 */
+    stroke-dasharray: 283;
+    stroke-dashoffset: 0;
+    /* A animação dura exatamente 3 segundos */
+    animation: countdown-progress 3s linear forwards;
+}
+
+@keyframes countdown-progress {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 283; }
+}
+
+.reveal-countdown {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+    font-family: 'Outfit', Arial, sans-serif;
+    line-height: 1;
+    z-index: 2;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    animation: pulse-number 1s ease-in-out infinite;
+}
+
+@keyframes pulse-number {
+    0%   { transform: scale(1);   opacity: 1; }
+    50%  { transform: scale(1.2); opacity: 0.7; }
+    100% { transform: scale(1);   opacity: 1; }
+}
+
+.reveal-logo {
+    height: 55px;
+    width: auto;
+    filter: brightness(0) invert(1) drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
+.reveal-text {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    line-height: 1.6;
+    max-width: 280px;
+    text-align: center;
+    letter-spacing: 0.2px;
+}
+
+/* --- Etiqueta Estilo Fatura de Supermercado --- */
+
+.receipt {
+    width: 100%;
+    background: #fefefe;
+    border-radius: 2px;
+    padding: 10px 14px; /* Margens reduzidas para diminuir o tamanho do cartão */
+    /* Sombra de papel com topo rasgado */
+    box-shadow:
+        0 1px 3px rgba(0,0,0,0.12),
+        0 4px 8px rgba(0,0,0,0.06);
+    font-family: "Courier New", Courier, monospace;
+    position: relative;
+    /* Borda pontilhada no topo para simular papel de fatura */
+    border-top: 3px dashed #bbb;
+}
+
+/* Efeito de papel rasgado no topo */
+.receipt::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 8px,
+        var(--primary-color) 8px,
+        var(--primary-color) 16px
+    );
+}
+
+.receipt-header {
+    text-align: center;
+    padding-bottom: 8px;
+}
+
+.receipt-store {
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #111;
+    text-transform: uppercase;
+}
+
+.receipt-subtitle {
+    font-size: 0.65rem;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.receipt-divider {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.receipt-divider.dashed {
+    border-top: 1px dashed #bbb;
+}
+
+.receipt-divider.solid {
+    border-top: 2px solid #333;
+}
+
+.receipt-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: #333;
+}
+
+.receipt-label {
+    color: #777;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+}
+
+.receipt-value {
+    font-weight: 700;
+    color: #111;
+    font-size: 0.78rem;
+}
+
+.receipt-price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 6px 0;
+    gap: 2px;
+}
+
+.receipt-price-label {
+    font-size: 0.65rem;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.receipt-price {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.receipt-currency {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    margin-top: 6px;
+}
+
+.receipt-amount {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #111;
+    letter-spacing: -2px;
+    line-height: 1;
+}
+
+.receipt-cents {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.receipt-barcode-section {
+    padding: 8px 0 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alinha as setas verticalmente com o código de barras */
+}
+
+/* --- Setas Vermelhas --- */
+.barcode-numbers-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 2px;
+}
+
+.red-arrow {
+    color: #ff0b0b;
+    font-size: 1.4rem;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 2px 4px rgba(255, 0, 0, 0.4);
+}
+
+.bounce-right {
+    margin-right: 6px;
+    animation: bounceRight 0.8s infinite alternate ease-in-out;
+}
+
+.bounce-left {
+    margin-left: 6px;
+    animation: bounceLeft 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes bounceRight {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(6px); }
+}
+
+@keyframes bounceLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-6px); }
+}
+
+.receipt-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.7rem;
+    color: #999;
+    text-align: center;
+    padding-top: 4px;
+}
+
+.receipt-footer-small {
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+/* --- Código de Barras Denso (estilo EAN/produto) --- */
+.barcode-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.barcode-bars {
+    width: fit-content;  /* largura ajustada ao conteúdo */
+    height: 70px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow: hidden;
+    margin: 0 auto; /* centra horizontalmente */
+}
+
+/* Cada barra é gerada pelo JavaScript */
+.barcode-bars .b {
+    background-color: #111;
+    flex-shrink: 0;
+    height: 100%;
+}
+.barcode-bars .b.sp {
+    background-color: #ffffff; /* espaço branco entre barras */
+}
+.barcode-bars .b.w  { width: 4px; }   /* barra larga */
+.barcode-bars .b.n  { width: 2px; }   /* barra estreita */
+.barcode-bars .b.s  { width: 3px; }   /* padrão */
+
+/* Espaços brancos */
+.barcode-bars .sp.w { width: 4px; }
+.barcode-bars .sp.n { width: 2px; }
+.barcode-bars .sp.s { width: 3px; }
+
+.barcode-numbers {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.05rem;
+    color: #111;
+    letter-spacing: 6px;
+    font-weight: 900; /* Números em negrito mais forte */
+    text-align: center;
+    width: 100%;
+}
+
+/* --- Formulário --- */
+.input-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background: rgba(255,255,255,0.95);
+    color: #333;
+}
+
+.input-group input:focus {
+    border-color: #fff;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.3);
+}
+
+/* Animação de erro no input */
+.error-shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    border-color: #ff2a2a !important;
+    color: #ff2a2a !important;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Rodapé abaixo do botão */
+.app-footer {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+}
+
+/* ============================================================
+   LANDING PAGE — Design Premium & Minimalista
+   ============================================================ */
+
+.landing-page {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top left, #00e600 0%, var(--primary-color) 40%, #009900 100%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Detalhes sutis no fundo */
+.landing-page::before,
+.landing-page::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.landing-page::before {
+    top: 8%;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        -180px 420px 0 -50px rgba(255, 255, 255, 0.06),
+        -120px 680px 0 -55px rgba(255, 255, 255, 0.05),
+        -260px 180px 0 -58px rgba(255, 255, 255, 0.06);
+}
+
+.landing-page::after {
+    bottom: 12%;
+    left: -30px;
+    width: 90px;
+    height: 90px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow:
+        220px -120px 0 -30px rgba(255, 255, 255, 0.05),
+        160px -280px 0 -35px rgba(255, 255, 255, 0.06),
+        300px -40px 0 -38px rgba(255, 255, 255, 0.05);
+}
+
+/* --- Header da Landing --- */
+.lp-header {
+    width: 100%;
+    padding: 1.2rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 70px;
+    position: sticky; /* Fica presa no topo */
+    top: 0;
+    background: var(--primary-color);
+    background: radial-gradient(circle at top left, #00e600 0%, var(--primary-color) 40%, #009900 100%);
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra para destacar */
+}
+
+.lp-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.lp-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lp-badge::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 1px; /* Para ficar levemente quadrado/arredondado como no print */
+}
+
+/* --- Página de Registo --- */
+.registration-page {
+    position: fixed;
+    inset: 0;
+    background: #f5f6f8;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.registration-page .lp-header {
+    background: var(--primary-color);
+}
+
+.reg-container {
+    padding: 1.5rem 5% 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+}
+
+.reg-hero {
+    background: linear-gradient(135deg, #00d900 0%, #00a800 100%);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 18px;
+    padding: 1.4rem 1.5rem 1.5rem;
+    color: white;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 160, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de brilho no canto superior esquerdo */
+.reg-hero::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.reg-subtitle {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.reg-title {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+}
+
+.reg-hero-divider {
+    width: 40px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    margin: 0 auto 10px;
+}
+
+.reg-desc {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.reg-form-card {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 0;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.reg-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.reg-input-group label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+}
+
+.reg-input-group input,
+.reg-input-group select {
+    width: 100%;
+    padding: 1.2rem;
+    border: 2px solid #eef0f2;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-family: inherit;
+    font-weight: 600;
+    background: #fcfcfc;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.reg-input-group input:focus,
+.reg-input-group select:focus {
+    border-color: var(--primary-color);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(0, 200, 0, 0.12);
+}
+
+.reg-input-group input::placeholder {
+    color: #a8a8a8;
+    font-weight: 500;
+}
+
+.reg-btn {
+    width: 100%;
+    padding: 1.2rem;
+    background: #f1f3f5;
+    color: #a0a0a0;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.reg-btn.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 200, 0, 0.3);
+}
+
+.reg-btn.active:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 200, 0, 0.4);
+}
+
+.reg-security {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1.5px solid #f0f0f0;
+}
+
+.reg-security p {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.reg-security p strong {
+    color: #222;
+}
+
+/* --- Secção Hero --- */
+.lp-hero {
+    padding: 1.5rem 7% 1rem; /* Reduzido padding top e bottom */
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título grande */
+.lp-title {
+    font-size: clamp(2rem, 9vw, 3rem);
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.2rem; /* Reduzido margin bottom */
+    white-space: nowrap; /* Evita a quebra de linha no título */
+}
+
+.lp-tagline {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.2px;
+    margin-bottom: 0.4rem; /* Reduzido margin bottom */
+}
+
+.lp-title-highlight {
+    background: white;
+    color: var(--primary-dark);
+    padding: 0 0.3em;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* Badge / pill "Mas quem ganha és tu!" */
+.lp-pill {
+    display: inline-block;
+    background: white;
+    color: var(--primary-dark);
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.5rem 1.4rem;
+    border-radius: 100px;
+    margin: 0.5rem 0 0.8rem; /* Reduzido margin top e bottom */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.lp-desc {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 0.8rem; /* Reduzido margin bottom */
+}
+
+.lp-desc strong {
+    color: white;
+    font-weight: 700;
+}
+
+/* --- Secção Premium de Prémios (Imagem) --- */
+.lp-prizes {
+    padding: 0 5%;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box; /* Garante que o padding não expande a largura */
+}
+
+.lp-prize-showcase {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box; /* Previne expansão do padding */
+    border: 4px solid white; /* Moldura normal simples */
+    background: white; /* Fundo sólido para preencher caso a imagem tenha transparência */
+}
+
+.lp-prizes-static-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* --- Botão CTA --- */
+.lp-cta {
+    padding: 0 5% 2.5rem;
+}
+
+.lp-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: white;
+    color: var(--primary-dark);
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.lp-btn:hover {
+    opacity: 0.93;
+    transform: translateY(-2px);
+}
+
+.lp-btn:active {
+    transform: scale(0.98);
+}
+
+/* Responsividade Mobile */
+@media (max-width: 380px) {
+    .lp-title { font-size: 2.4rem; }
+    .lp-prize-amount { font-size: 1.5rem; }
+    .lp-cart-img { max-width: 75px; }
+}
+
+/* ============================================================
+   SECÇÃO DE COMENTÁRIOS DE VENCEDORES
+   ============================================================ */
+.lp-comments-section {
+    padding: 0 5% 3rem;
+    width: 100%;
+}
+
+.lp-comments-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.lp-comments-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem 1.2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.lp-comments-card-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 1.2rem;
+}
+
+.lp-comments-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.lp-review {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lp-review:first-child {
+    padding-top: 0;
+}
+
+.lp-review:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.lp-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lp-review-stars {
+    color: #222; /* Estrelas pretas como no exemplo */
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.lp-review-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.lp-review-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.lp-review-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #111;
+    margin-bottom: 4px;
+}
+
+.lp-review-photos {
+    display: flex;
+    gap: 8px;
+}
+
+.lp-review-photo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.lp-review-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 8px;
+}
+
+.lp-review-actions svg {
+    margin-bottom: 2px;
+}
+
+/* Botão Útil clicável */
+.util-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.util-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: rgba(0, 200, 0, 0.05);
+}
+
+.util-btn.liked {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: rgba(0, 200, 0, 0.08);
+    font-weight: 700;
+}
+
+.util-btn.liked svg {
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
+}
+
+
+/* --- Inspecionado por --- */
+.lp-inspection-box {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.lp-inspection-title {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.lp-inspection-img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.lp-age-restriction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+
+
+/* Animação de flutuação */
+@keyframes float {
+    0%   { transform: translateY(0px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+    50%  { transform: translateY(-6px); box-shadow: 0 16px 35px rgba(0,0,0,0.18); }
+    100% { transform: translateY(0px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+}
+
+/* Animação de brilho no botão */
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+.input-group button {
+    width: 100%;
+    padding: 1.2rem;
+    /* Gradiente vivo + brilho animado */
+    background: linear-gradient(
+        270deg,
+        #00e600,
+        #00c800,
+        #00ff00,
+        #00c800,
+        #00e600
+    );
+    background-size: 300% 300%;
+    animation: float 2.5s ease-in-out infinite, shimmer 3s linear infinite;
+    color: white;
+    border: none;
+    border-radius: 50px; /* Formato de pílula arredondado */
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: uppercase;
+    /* Sombra colorida intensa para destacar do fundo */
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25),
+        0 0 0 4px rgba(255, 255, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Brilho deslizante por cima */
+.input-group button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 50%;
+    height: 200%;
+    background: rgba(255,255,255,0.25);
+    transform: skewX(-20deg);
+    animation: slide-shine 2.5s ease-in-out infinite;
+}
+
+@keyframes slide-shine {
+    0%   { left: -75%; }
+    60%  { left: 125%; }
+    100% { left: 125%; }
+}
+
+.input-group button:hover {
+    animation: none;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 14px 35px rgba(0,0,0,0.3),
+        0 0 0 5px rgba(255, 255, 255, 0.5);
+    background: #00e000;
+}
+
+.input-group button:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.expiration-timer {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: #ff2a2a; /* Vermelho vivo pedido */
+    font-weight: 700;
+    text-align: center; /* Centraliza o texto */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    display: none; /* Só mostra quando a fatura é revelada */
+    width: 100%;
+}
+
+.expiration-timer span {
+    color: #ff2a2a; /* Garante que o contador também fica vermelho */
+    font-weight: 900;
+    font-size: 1.15rem;
+}
+
+/* --- Popup de Sucesso --- */
+.success-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5); /* Fundo escurecido */
+    backdrop-filter: blur(8px); /* Desfoque do fundo pedido */
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.success-popup-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.success-popup-card {
+    background: white;
+    width: 290px;
+    border-radius: 20px;
+    padding: 4rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    transform: scale(0.8) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-popup-overlay.show .success-popup-card {
+    transform: scale(1) translateY(0);
+}
+
+/* Círculo da Logo Flutuante */
+.success-circle {
+    width: 90px;
+    height: 90px;
+    background: #6ab035; /* Verde semelhante ao fundo do botão */
+    border-radius: 50%;
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Efeito de halo/brilho suave */
+    box-shadow: 0 0 0 6px rgba(255, 107, 0, 0.2), 0 0 25px rgba(255, 107, 0, 0.4); 
+    padding: 12px;
+}
+
+.popup-real-logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Mantém a logo branca para melhor leitura */
+}
+
+/* Textos do Popup */
+.success-status {
+    color: #1fc17b; /* Verde vibrante para o "CORRETO" */
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.success-amount {
+    color: #2b1f4a; /* Roxo/azul escuro */
+    font-size: 3.2rem;
+    font-weight: 900;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.success-plus {
+    font-size: 2.2rem;
+    font-weight: 900;
+}
+
+.success-currency {
+    color: #ff6b00; /* Laranja da moeda Kz */
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+/* --- Animações --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-8px); }
+    40%       { transform: translateX(8px); }
+    60%       { transform: translateX(-5px); }
+    80%       { transform: translateX(5px); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0);    box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+    50%       { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,0,0,0.18); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.error-shake {
+    animation: shake 0.4s ease;
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.15) !important;
+}
+
+/* ===== ECRÃ DE CELEBRAÇÃO ===== */
+.celebration-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: radial-gradient(ellipse at center, #00e000 0%, #007700 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Anéis de onda pulsantes */
+.celeb-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.25);
+    animation: ringExpand 2.4s ease-out infinite;
+    pointer-events: none;
+}
+.celeb-ring.r1 { width: 180px; height: 180px; animation-delay: 0s; }
+.celeb-ring.r2 { width: 180px; height: 180px; animation-delay: 0.8s; }
+.celeb-ring.r3 { width: 180px; height: 180px; animation-delay: 1.6s; }
+
+@keyframes ringExpand {
+    0%   { transform: scale(0.5); opacity: 0.8; }
+    100% { transform: scale(4);   opacity: 0; }
+}
+
+/* Confettis */
+.confetti-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 14px;
+    border-radius: 3px;
+    opacity: 0.9;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* Card central */
+.celebration-card {
+    position: relative;
+    z-index: 2;
+    background: white;
+    border-radius: 32px;
+    padding: 2rem 1.8rem 1.8rem;
+    max-width: 320px;
+    width: 88%;
+    text-align: center;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.35), 0 0 0 4px rgba(255,255,255,0.3);
+    animation: celebCardPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes celebCardPop {
+    from { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg);     opacity: 1; }
+}
+
+/* Logo Animado */
+.celeb-logo-wrap {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fff8;
+    border-radius: 50%;
+    box-shadow: inset 0 4px 10px rgba(0,200,0,0.1), 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.celeb-logo {
+    width: 80%;
+    height: auto;
+    animation: logoPulse 1.2s ease-in-out infinite alternate;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+@keyframes logoPulse {
+    from { transform: scale(0.95); }
+    to   { transform: scale(1.05); }
+}
+
+/* Partículas orbitais */
+.celeb-particle {
+    position: absolute;
+    font-size: 1.4rem;
+    animation: orbitParticle 1.8s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+.celeb-particle.p1 { top: 10px;  left: -10px;  animation-delay: 0s;    font-size: 1.2rem; }
+.celeb-particle.p2 { top: 30px;  right: -10px; animation-delay: 0.3s;  font-size: 1.5rem; }
+.celeb-particle.p3 { top: -5px;  left: 50%;    transform: translateX(-50%); animation-delay: 0.6s; font-size: 1.8rem; }
+.celeb-particle.p4 { bottom: 30px; left: 0;    animation-delay: 0.9s;  font-size: 1.1rem; }
+.celeb-particle.p5 { bottom: 20px; right: 5px; animation-delay: 1.2s;  font-size: 1.3rem; }
+
+@keyframes orbitParticle {
+    from { transform: translateY(0)   scale(0.8); opacity: 0.6; }
+    to   { transform: translateY(-12px) scale(1.2); opacity: 1; }
+}
+
+/* Texto */
+.celeb-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 4px;
+    animation: titleSlide 0.5s 0.3s ease both;
+}
+
+@keyframes titleSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.celeb-sub {
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+    animation: titleSlide 0.5s 0.5s ease both;
+}
+
+/* Contador circular */
+.celeb-countdown-wrap {
+    background: linear-gradient(135deg, #f0f9f0, #e8f5e8);
+    border-radius: 18px;
+    padding: 1rem;
+    animation: titleSlide 0.5s 0.7s ease both;
+}
+
+.celeb-countdown-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.celeb-countdown-circle {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.celeb-ring-svg {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    top: 0; left: 0;
+}
+
+.celeb-countdown-circle span {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+#celebRingSvg {
+    stroke: var(--primary-color);
+    transition: stroke-dashoffset 1s linear;
+}
+
+/* ========================================================= */
+/* ===== FLUXO FINAL DE LEVANTAMENTO ===================== */
+/* ========================================================= */
+
+/* --- Página de Levantamento --- */
+.withdrawal-page {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    background: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.withdraw-banner {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #007a00 100%);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-bottom: 3rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.withdraw-hero {
+    text-align: center;
+    color: white;
+    margin-top: 1rem;
+}
+
+.withdraw-icon-wrap {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.withdraw-icon-logo {
+    width: 40px;
+    height: auto;
+}
+
+.withdraw-subtitle {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.withdraw-amount {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 5px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.withdraw-currency {
+    font-size: 1.8rem;
+    color: #ffd700;
+}
+
+.withdraw-action-text {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.withdraw-form-card {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: -30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 2;
+}
+
+.withdraw-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.withdraw-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.withdraw-tab {
+    flex: 1;
+    padding: 12px;
+    background: #f4f6f8;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.withdraw-tab.active {
+    background: #f0fff0;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.withdraw-input-group {
+    margin-bottom: 1.5rem;
+}
+
+.withdraw-input {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    color: #333;
+    transition: border-color 0.2s;
+}
+
+.withdraw-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 200, 0, 0.1);
+}
+
+.withdraw-info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fef8;
+    border: 1px solid #e0f2e0;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.withdraw-submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: #f0f0f0;
+    color: #888;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: not-allowed;
+    transition: all 0.3s;
+}
+
+.withdraw-submit-btn.active {
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 200, 0, 0.3);
+}
+
+.withdraw-submit-btn.active:hover {
+    transform: translateY(-2px);
+}
+
+/* --- Ecrã de Loading Overlay --- */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.95);
+    z-index: 99995;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f0f0f0;
+    border-top: 4px solid #ff8c00;
+    border-right: 4px solid var(--primary-color);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* --- Página Final --- */
+.final-page {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.final-container {
+    padding: 0 20px 40px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.final-header-text {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.final-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 5px;
+}
+
+.final-subtitle {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.final-instruction {
+    font-size: 0.9rem;
+    color: #666;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.payment-countdown-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    margin: 0 auto 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: fit-content;
+    max-width: 92%;
+}
+
+.payment-countdown-text {
+    font-size: 0.8rem;
+    color: #4b5563;
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.payment-countdown-timer {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #dc2626;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+    background: #fef2f2;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+}
+
+.final-summary-card {
+    background: #f8fef8;
+    border: 2px solid #e0f2e0;
+    border-radius: 20px;
+    padding: 1.5rem;
+}
+
+.summary-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.summary-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.summary-value {
+    color: #111;
+    font-weight: 700;
+    text-align: right;
+}
+
+.summary-divider {
+    height: 1px;
+    background: #ddd;
+    margin: 15px 0;
+}
+
+.summary-row.highlight {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    align-items: center;
+}
